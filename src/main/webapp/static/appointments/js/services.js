@@ -102,6 +102,8 @@ angular.module('appointmentsApp.services', []).factory('$fhirApiServices', funct
                 patient.dob = patientResult.birthDate;
                 patient.id  = patientResult.id;
                 deferred.resolve(patient);
+            }).fail(function(){
+                deferred.reject();
             });
         return deferred;
         },
@@ -131,6 +133,9 @@ angular.module('appointmentsApp.services', []).factory('$fhirApiServices', funct
         },
         getIntent: function() {
             return fhirClient.tokenResponse.intent;
+        },
+        hasPatientContext: function() {
+            return fhirClient.patient !== undefined;
         }
     }
 });

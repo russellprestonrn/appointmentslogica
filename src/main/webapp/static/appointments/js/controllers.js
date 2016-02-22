@@ -50,6 +50,38 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
                     $state.go('practitioner-view', {});
                     break;
                 default:
+                    if ($fhirApiServices.hasPatientContext()) {
+                       $fhirApiServices.queryPatient()
+                        .done(function(patientResult){
+                            $scope.patient = patientResult;
+                            query.patient = "Patient/"+ $scope.patient.id;
+                            $fhirApiServices.queryResourceInstances("Appointment", query)
+                                .done(function(resourceResults){
+                                    angular.forEach(resourceResults, function (resource) {
+                                        $scope.appointments.push(resource);
+
+                                    });
+                                    $rootScope.$digest();
+                                });
+                        }).fail(function(){
+                        });
+                        $state.go('patient-view', {});
+                    } else {
+                        $fhirApiServices.getFhirProfileUser()
+                            .done(function(profileResult){
+                                $scope.profile = profileResult;
+                                query.practitioner = "Practitioner/" + $scope.profile.id;
+                                $fhirApiServices.queryResourceInstances("Appointment", query)
+                                    .done(function(resourceResults){
+                                        angular.forEach(resourceResults, function (resource) {
+                                            $scope.appointments.push(resource);
+
+                                        });
+                                        $rootScope.$digest();
+                                    });
+                            });
+                        $state.go('practitioner-view', {});
+                    }
             }
 
         });
