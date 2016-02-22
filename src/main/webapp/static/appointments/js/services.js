@@ -108,7 +108,7 @@ angular.module('appointmentsApp.services', []).factory('$fhirApiServices', funct
         getFhirProfileUser: function() {
             var deferred = $.Deferred();
             if (fhirClient.userId === null ||
-                typeof this.fhirClient.userId === "undefined"){
+                typeof fhirClient.userId === "undefined"){
                 deferred.resolve(null);
                 return deferred;
             }

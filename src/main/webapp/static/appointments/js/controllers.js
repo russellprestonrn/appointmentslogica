@@ -36,7 +36,7 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
                 case 'practitioner-view':
                     $fhirApiServices.getFhirProfileUser()
                         .done(function(profileResult){
-                            $scope.patient = profileResult;
+                            $scope.profile = profileResult;
                             query.practitioner = "Practitioner/" + $scope.profile.id;
                             $fhirApiServices.queryResourceInstances("Appointment", query)
                                 .done(function(resourceResults){
