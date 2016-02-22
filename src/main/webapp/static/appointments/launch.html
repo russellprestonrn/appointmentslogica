@@ -1,0 +1,15 @@
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>HSPC Appointments</title>
+    <script src="fhir-client/fhir-client.js"></script>
+    <script>
+        FHIR.oauth2.authorize({
+        "client_id": "hspc_appointments",
+        "scope":  "user/*.* patient/*.read launch openid profile "
+        });
+    </script>
+</head>
+Loading...
+</html>
