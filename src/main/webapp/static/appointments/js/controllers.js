@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('appointmentsApp.controllers', []).controller('mainController',
-    ['$scope', '$rootScope',"$fhirApiServices",
-    function ($scope, $rootScope, $fhirApiServices ) {
+    ['$scope', '$rootScope',"$fhirApiServices", "$state",
+    function ($scope, $rootScope, $fhirApiServices, $state ) {
 
-        $scope.patient;
-        $scope.profile;
+        $scope.patient = "";
+        $scope.profile = "";
         $scope.appointments = [];
 
 
@@ -15,18 +15,42 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
          *
          **/
         $fhirApiServices.initClient().then(function(){
-            $fhirApiServices.queryPatient()
-                .done(function(patientResult){
-                    $scope.patient = patientResult;
-                });
-            $fhirApiServices.queryResourceInstances("Appointment")
-                .done(function(resourceResults){
-                    angular.forEach(resourceResults, function (resource) {
-                        $scope.appointments.push(resource);
+            var query = {};
+            switch($fhirApiServices.getIntent()) {
+                case 'patient-view':
+                    $fhirApiServices.queryPatient()
+                        .done(function(patientResult){
+                            $scope.patient = patientResult;
+                            query.patient = "Patient/"+ $scope.patient.id;
+                            $fhirApiServices.queryResourceInstances("Appointment", query)
+                                .done(function(resourceResults){
+                                    angular.forEach(resourceResults, function (resource) {
+                                        $scope.appointments.push(resource);
 
-                    });
-                    $rootScope.$digest();
-                });
+                                    });
+                                    $rootScope.$digest();
+                                });
+                        });
+                    $state.go('patient-view', {});
+                    break;
+                case 'practitioner-view':
+                    $fhirApiServices.getFhirProfileUser()
+                        .done(function(profileResult){
+                            $scope.patient = profileResult;
+                            query.practitioner = "Practitioner/" + $scope.profile.id;
+                            $fhirApiServices.queryResourceInstances("Appointment", query)
+                                .done(function(resourceResults){
+                                    angular.forEach(resourceResults, function (resource) {
+                                        $scope.appointments.push(resource);
+
+                                    });
+                                    $rootScope.$digest();
+                                });
+                        });
+                    $state.go('practitioner-view', {});
+                    break;
+                default:
+            }
 
         });
 

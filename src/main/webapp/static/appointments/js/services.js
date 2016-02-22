@@ -128,6 +128,9 @@ angular.module('appointmentsApp.services', []).factory('$fhirApiServices', funct
                     deferred.resolve(user);
                 });
             return deferred;
+        },
+        getIntent: function() {
+            return fhirClient.tokenResponse.intent;
         }
     }
 });

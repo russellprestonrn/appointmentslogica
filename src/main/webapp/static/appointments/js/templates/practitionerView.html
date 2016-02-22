@@ -1,6 +1,20 @@
 <div class="container-fluid" ng-controller="PractitionerViewController">
     <div class="row">
         <div class="content-column" class="col-lg-12">
+            <table class="table table-striped">
+                <tr>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                </tr>
+                <tbody>
+                <tr ng-repeat="appointment in appointments">
+                    <td>{{appointment.start}}</td>
+                    <td>{{appointment.status}}</td>
+                    <td>{{appointment.description}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
