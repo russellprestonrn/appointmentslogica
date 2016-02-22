@@ -4,7 +4,7 @@ START TRANSACTION;
 
 -- Appointments
 INSERT INTO client_details (client_id, client_name, logo_uri, access_token_validity_seconds, token_endpoint_auth_method) VALUES
-	('hspc_appointments', 'HSPC Appointments', 'https://sandbox.hspconsortium.org/hspc-appointment-viewer/static/images/appointment-viewer.png', 86400, 'NONE');
+	('hspc_appointments', 'HSPC Appointments', 'https://sandbox.hspconsortium.org/hspc-appointments/static/appointments/images/appointments.png', 86400, 'NONE');
 
 INSERT INTO client_scope (owner_id, scope) VALUES
 	((SELECT id from client_details where client_id = 'hspc_appointments'), 'openid'),
