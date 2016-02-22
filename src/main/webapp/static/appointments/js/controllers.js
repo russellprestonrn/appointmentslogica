@@ -21,7 +21,7 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
                     $fhirApiServices.queryPatient()
                         .done(function(patientResult){
                             $scope.patient = patientResult;
-                            query.patient = "Patient/"+ $scope.patient.id;
+                            query.patient = $scope.patient.id;
                             $fhirApiServices.queryResourceInstances("Appointment", query)
                                 .done(function(resourceResults){
                                     angular.forEach(resourceResults, function (resource) {
@@ -37,7 +37,7 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
                     $fhirApiServices.getFhirProfileUser()
                         .done(function(profileResult){
                             $scope.profile = profileResult;
-                            query.practitioner = "Practitioner/" + $scope.profile.id;
+                            query.practitioner = $scope.profile.id;
                             $fhirApiServices.queryResourceInstances("Appointment", query)
                                 .done(function(resourceResults){
                                     angular.forEach(resourceResults, function (resource) {
@@ -54,7 +54,7 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
                        $fhirApiServices.queryPatient()
                         .done(function(patientResult){
                             $scope.patient = patientResult;
-                            query.patient = "Patient/"+ $scope.patient.id;
+                            query.patient = $scope.patient.id;
                             $fhirApiServices.queryResourceInstances("Appointment", query)
                                 .done(function(resourceResults){
                                     angular.forEach(resourceResults, function (resource) {
@@ -70,7 +70,7 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
                         $fhirApiServices.getFhirProfileUser()
                             .done(function(profileResult){
                                 $scope.profile = profileResult;
-                                query.practitioner = "Practitioner/" + $scope.profile.id;
+                                query.practitioner = $scope.profile.id;
                                 $fhirApiServices.queryResourceInstances("Appointment", query)
                                     .done(function(resourceResults){
                                         angular.forEach(resourceResults, function (resource) {
