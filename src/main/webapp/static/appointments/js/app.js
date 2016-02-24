@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('appointmentsApp', ['ui.router', 'ngAnimate', 'ui.bootstrap', 'appointmentsApp.filters', 'appointmentsApp.services', 'appointmentsApp.controllers', 'appointmentsApp.directives'], function($stateProvider, $urlRouterProvider){
+angular.module('appointmentsApp', ['ui.router', 'ngAnimate', 'ui.bootstrap', 'daypilot', 'appointmentsApp.filters', 'appointmentsApp.services', 'appointmentsApp.controllers', 'appointmentsApp.directives'], function($stateProvider, $urlRouterProvider){
 
     $urlRouterProvider.otherwise('/patient-view');
 

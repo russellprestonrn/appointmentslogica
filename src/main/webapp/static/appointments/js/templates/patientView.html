@@ -1,20 +1,22 @@
 <div class="container-fluid" ng-controller="PatientViewController">
     <div class="row">
         <div class="content-column" class="col-lg-12">
-            <table class="table table-striped">
-                <tr>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Description</th>
-                </tr>
-                <tbody>
-                <tr ng-repeat="appointment in appointments">
-                    <td>{{appointment.start}}</td>
-                    <td>{{appointment.status}}</td>
-                    <td>{{appointment.description}}</td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="CalendarStripe">
+                <div ng-controller="AppointmentsCtrl" >
+                    <div style="float:left; width: 160px">
+                        <daypilot-navigator id="navi" daypilot-config="navigatorConfig" ></daypilot-navigator>
+                    </div>
+                    <div style="margin-left: 160px">
+                        <div class="space">
+                            <button ng-click="showDay()">Day</button>
+                            <button ng-click="showWeek()">Week</button>
+                        </div>
+                        <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
+                        <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
