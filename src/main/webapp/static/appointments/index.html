@@ -9,7 +9,6 @@
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/cal.css">
 
@@ -26,7 +25,7 @@
 <!-- NAVIGATION -->
 <nav class="navbar" role="navigation">
     <div><img src="images/hspc-logo-main-web-top.png" srcset="images/hspc-logo-main-web-top@2x.png 2x"/></div>
-    <div class="navbar-center-title" center ng-style="centerWithOffset(160)">Appointments</div>
+    <div class="navbar-center-title" center ng-style="centerWithOffset(95)">Appointments</div>
     <div class="pull-right">
         <div class="navbar-stack-top">
             <div class="navbar-brand"><span class="glyphicon glyphicon-user"></span>{{user.name}}</div>
@@ -40,28 +39,21 @@
 </nav>
 
 <div class="CalendarStripe">
-        <div ng-controller="AppointmentsCtrl" >
-            <div style="float:left; width: 160px">
-                <daypilot-navigator id="navi" daypilot-config="navigatorConfig" ></daypilot-navigator>
-            </div>
-            <div style="margin-left: 160px">
-                <div class="space">
-                    <button ng-click="showDay()">Day</button>
-                    <button ng-click="showWeek()">Week</button>
-                </div>
-                <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
-                <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar> 
-            </div>
-        </div>
+    <div style="float:left; width: 160px">
+        <daypilot-navigator id="navi" daypilot-config="navigatorConfig" ></daypilot-navigator>
     </div>
+    <div style="margin-left: 160px">
+        <div class="space">
+            <button ng-click="showDay()">Day</button>
+            <button ng-click="showWeek()">Week</button>
+        </div>
+        <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
+        <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar>
+    </div>
+</div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
 
 <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
 <script src="daypilot/daypilot-all.min.js"></script>
