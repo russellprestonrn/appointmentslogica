@@ -1,83 +1,68 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="appointmentsApp">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Appointments</title>
-        <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Appointments</title>
+    <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
 
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
-        <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/cal.css">
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
-		<![endif]--> 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-messages.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-app="appointmentsApp" ng-controller="mainController">
 
-        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
-        <script src="fhir-client/fhir-client.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/daypilot-all.min.js"></script>
-        <script src="js/cal.js"></script>
-        <script src="js/services.js"></script>
-        <script src="js/controllers.js"></script>
-        <script src="js/filters.js"></script>
-        <script src="js/directives.js"></script>
-    </head>
-    <body ng-app="appointmentsApp" ng-controller="mainController">
-
-    <!-- NAVIGATION -->
-    <nav class="navbar" role="navigation">
-        <div><img src="images/hspc-logo-main-web-top.png" srcset="images/hspc-logo-main-web-top@2x.png 2x"/></div>
-        <div class="navbar-center-title" center ng-style="centerWithOffset(160)">Appointments</div>
-        <div class="pull-right">
-            <div class="navbar-stack-top">
-                <div class="navbar-brand"><span class="glyphicon glyphicon-user"></span>{{patient.name}}</div>
-                <!--<div class="navbar-text">gender <span class="title">{{patient.sex}}</span></div>-->
-            </div>
-            <div class="navbar-stack-bottom">
-                <!--<div class="navbar-text">dob <span class="title">{{patient.dob | date: 'dd MMM yyyy HH:mm'}}</span></div>-->
-                <!--<div class="navbar-text">age <span class="title">{{patient.dob | age}}</span></div>-->
-            </div>
+<!-- NAVIGATION -->
+<nav class="navbar" role="navigation">
+    <div><img src="images/hspc-logo-main-web-top.png" srcset="images/hspc-logo-main-web-top@2x.png 2x"/></div>
+    <div class="navbar-center-title" center ng-style="centerWithOffset(160)">Appointments</div>
+    <div class="pull-right">
+        <div class="navbar-stack-top">
+            <div class="navbar-brand"><span class="glyphicon glyphicon-user"></span>{{user.name}}</div>
+            <!--<div class="navbar-text">gender <span class="title">{{patient.sex}}</span></div>-->
         </div>
-    </nav>
-        <!--
-     <div>
-        <div class="row container-fluid">
-            <div class="col-xs-12">
-                <div ui-view></div>
-            </div>
-        </div>
-    </div> 
-    <br>
--->
-    <div class="CalendarStripe">
-        <div ng-controller="AppointmentsCtrl" >
-            <div style="float:left; width: 160px">
-                <daypilot-navigator id="navi" daypilot-config="navigatorConfig" ></daypilot-navigator>
-            </div>
-            <div style="margin-left: 160px">
-                <div class="space">
-                    <button ng-click="showDay()">Day</button>
-                    <button ng-click="showWeek()">Week</button>
-                </div>
-                <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
-                <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar> 
-            </div>
+        <div class="navbar-stack-bottom">
+            <!--<div class="navbar-text">dob <span class="title">{{patient.dob | date: 'dd MMM yyyy HH:mm'}}</span></div>-->
+            <!--<div class="navbar-text">age <span class="title">{{patient.dob | age}}</span></div>-->
         </div>
     </div>
-    </body>
+</nav>
+
+
+<div>
+    <div class="row container-fluid">
+        <div class="col-xs-12">
+            <div ui-view></div>
+        </div>
+    </div>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+<script src="daypilot/daypilot-all.min.js"></script>
+<script src="fhir-client/fhir-client.js"></script>
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+</body>
 </html>
