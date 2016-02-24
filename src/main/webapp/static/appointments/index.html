@@ -39,14 +39,21 @@
     </div>
 </nav>
 
-
-<div>
-    <div class="row container-fluid">
-        <div class="col-xs-12">
-            <div ui-view></div>
+<div class="CalendarStripe">
+        <div ng-controller="AppointmentsCtrl" >
+            <div style="float:left; width: 160px">
+                <daypilot-navigator id="navi" daypilot-config="navigatorConfig" ></daypilot-navigator>
+            </div>
+            <div style="margin-left: 160px">
+                <div class="space">
+                    <button ng-click="showDay()">Day</button>
+                    <button ng-click="showWeek()">Week</button>
+                </div>
+                <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
+                <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar> 
+            </div>
         </div>
     </div>
-</div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
