@@ -38,19 +38,20 @@
     </div>
 </nav>
 
-<div class="CalendarStripe">
-    <div style="float:left; width: 160px">
-        <daypilot-navigator id="navi" daypilot-config="navigatorConfig" ></daypilot-navigator>
-    </div>
-    <div style="margin-left: 160px">
-        <div class="space">
-            <button ng-click="showDay()">Day</button>
-            <button ng-click="showWeek()">Week</button>
+
+    <div class="CalendarStripe">
+        <div style="float:left; width: 160px; padding-left: 20px">
+            <daypilot-navigator id="navi" daypilot-config="navigatorConfig" ></daypilot-navigator>
         </div>
-        <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
-        <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar>
+        <div style="margin-left: 180px; padding-right: 20px">
+            <div class="space">
+                <button ng-click="showDay()">Day</button>
+                <button ng-click="showWeek()">Week</button>
+            </div>
+            <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
+            <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar>
+        </div>
     </div>
-</div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
