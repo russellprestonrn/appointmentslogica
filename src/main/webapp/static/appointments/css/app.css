@@ -999,9 +999,15 @@ div.modal_cover {
     margin: auto;
     width: 98%;
     background-color: #139dea;
-    height: 500px;
+    height: 565px;
     padding: 3px;
     padding-top: 10px;
+}
+.DW {
+    padding-bottom: 150px;
+}
+.Month {
+    padding-bottom: -150px;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
