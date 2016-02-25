@@ -45,13 +45,18 @@
             <div class="space">
                 <button ng-click="showDay()">Day</button>
                 <button ng-click="showWeek()">Week</button>
+                <button ng-click="showMonth()">Month</button>
             </div>
-            <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
-            <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar>
+            <div style="height: 530px">
+                <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
+                <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar>   
+                <daypilot-month id="month" daypilot-config="monthConfig" daypilot-events="events" ></daypilot-month>
+            </div>
         </div>
+            
     </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
 
 <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
 <script src="daypilot/daypilot-all.min.js"></script>
