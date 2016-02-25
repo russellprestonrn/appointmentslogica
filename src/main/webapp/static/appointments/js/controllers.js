@@ -104,8 +104,9 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
                     "id":appointment.id,
                     "text":(appointment.description!== undefined) ? appointment.description : appointment.type.text,
                     "start": new DayPilot.Date(appointment.start),
-                    "end": (appointment.end !== undefined) ? new DayPilot.Date(appointment.end) : new DayPilot.Date(determineEndtime(appointment.start, appointment.minutesDuration))
-
+                    "end": (appointment.end !== undefined) ? new DayPilot.Date(appointment.end) : new DayPilot.Date(determineEndtime(appointment.start, appointment.minutesDuration)),
+                    "moveDisabled": true,
+                    "resizeDisabled": true
                 })
             });
         }
