@@ -209,6 +209,7 @@ span.title,
 .navbar-center-title {
     position: absolute;
     font-weight: lighter;
+    /*left: 500px;*/
     top: 15px;
     font-size: 38px;
 }

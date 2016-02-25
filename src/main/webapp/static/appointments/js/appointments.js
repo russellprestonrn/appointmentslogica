@@ -33,6 +33,7 @@ var endpointChoices = [
 ];
 
 initClient().then(function(){
+    windowResized();
     buildSettings();
     initializeCalendar();
 
@@ -42,6 +43,7 @@ initClient().then(function(){
                 patient = patientResult;
                 user = patient;
                 user.resourceType = "Patient";
+                document.getElementById("app-title").innerHTML = "Patient Appointments";
                 document.getElementById("user-name").innerHTML = patient.name;
                 document.getElementById("user-icon").className = "fa fa-user";
                 $('#calendar').fullCalendar( 'changeView', "month" );
@@ -54,6 +56,7 @@ initClient().then(function(){
                 profile = profileResult;
                 user = profile;
                 user.resourceType = "Practitioner";
+                document.getElementById("app-title").innerHTML = "Practitioner Appointments";
                 document.getElementById("user-name").innerHTML = profile.name;
                 document.getElementById("user-icon").className = "fa fa-user-md";
                 $('#calendar').fullCalendar( 'changeView', "agendaWeek" );
@@ -151,12 +154,9 @@ function buildCalendarEvents(){
             "color": selectedEndpoint.color,
             "title":(appointment.description!== undefined) ? appointment.description : appointment.type.text,
             "start": new Date(appointment.start),
-//            "startOriginal" : appointment.start,
-            "location": "Doctor's Office",
-            "who": "Dr. Kurtis Giles,MD; Jane Smith, RN",
+            "location": "Dr Giles' Office",
+            "who": "Dr Kurtis Giles,MD; Jane Smith,RN",
             "end": (appointment.end !== undefined) ? new Date(appointment.end) : new Date(determineEndtime(appointment.start, appointment.minutesDuration))
-//            "endOriginal": (appointment.end !== undefined) ? appointment.end : determineEndtime(appointment.start, appointment.minutesDuration)
-
         })
     });
     updateCalendarEvents();
@@ -200,6 +200,11 @@ function initializeCalendar() {
     });
 }
 
+function windowResized() {
+    var offset = (user.resourceType === "Patient") ? 150 : 180;
+    var w = window.outerWidth;
+    document.getElementById("app-title").style.left = (w/2) - offset + "px";
+}
 
 /**
  *
