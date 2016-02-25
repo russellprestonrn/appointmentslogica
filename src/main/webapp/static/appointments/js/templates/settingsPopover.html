@@ -1,0 +1,10 @@
+<!--<div style="width: 100px" ng-repeat="endpoint in endpointChoices">-->
+    <!--<div><a href='#' class='popover-btn' ng-click="settings(endpoint)">{{endpoint.name}}</a></div>-->
+<!--</div>-->
+
+<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url">
+    <div style="width: 100px" ng-repeat="endpoint in endpointChoices">
+        <li role="menuitem"><a href='#' class='popover-btn' ng-click="settings(endpoint)">{{endpoint.name}}</a></li>
+    </div>
+</ul>
+

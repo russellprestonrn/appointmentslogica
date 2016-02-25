@@ -27,13 +27,13 @@
     <div><img src="images/hspc-logo-main-web-top.png" srcset="images/hspc-logo-main-web-top@2x.png 2x"/></div>
     <div class="navbar-center-title" center ng-style="centerWithOffset(95)">Appointments</div>
     <div class="pull-right">
-        <div class="navbar-stack-top">
-            <div class="navbar-brand"><span class="glyphicon glyphicon-user"></span>{{user.name}}</div>
-            <!--<div class="navbar-text">gender <span class="title">{{patient.sex}}</span></div>-->
-        </div>
-        <div class="navbar-stack-bottom">
-            <!--<div class="navbar-text">dob <span class="title">{{patient.dob | date: 'dd MMM yyyy HH:mm'}}</span></div>-->
-            <!--<div class="navbar-text">age <span class="title">{{patient.dob | age}}</span></div>-->
+        <div class="navbar-stack-name"><i class='fa' ng-class="user.resourceType === 'Patient' ? 'fa-user' : 'fa-user-md'"></i><span style="font-weight: bold"> {{user.name}}</span></div>
+        <!--<div class="navbar-stack-settings"><a href='#' uib-popover-template="'js/templates/settingsPopover.html'" popover-trigger="focus" popover-placement="bottom"><i class="fa fa-gear"></i> Settings</a></div>-->
+
+        <div class="navbar-stack-settings" uib-dropdown>
+            <a href='#' uib-dropdown-toggle><i class="fa fa-gear"></i> Settings</a>
+            <ul uib-dropdown-menu template-url="js/templates/settingsPopover.html" aria-labelledby="button-template-url">
+            </ul>
         </div>
     </div>
 </nav>

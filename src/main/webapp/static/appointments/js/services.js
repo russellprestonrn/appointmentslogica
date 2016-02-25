@@ -8,52 +8,35 @@ angular.module('appointmentsApp.services', []).factory('$fhirApiServices', funct
          *
          **/
 
-    var fhirClient;
-    var patient;
+    var currentClient;
+
+    var clientList = {
+        secureFhirClient: ""
+    };
 
     return {
-        fhirClient: function(){
-            return fhirClient;
-        },
-        clientInitialized: function(){
-            return (fhirClient !== undefined && fhirClient !== null);
-        },
         initClient: function(){
             var that = this;
             var deferred = $.Deferred();
+            if (clientList.secureFhirClient !== "") {
+                currentClient = clientList.secureFhirClient;
+                deferred.resolve();
+            }
 
             FHIR.oauth2.ready(function(smart){
-                fhirClient = smart;
+                clientList.secureFhirClient = smart;
+                currentClient = smart;
                 deferred.resolve();
             });
             return deferred;
         },
-        hasNext: function(lastSearch) {
-            var hasLink = false;
-            if (lastSearch  === undefined) {
-                return false;
+        initNonSecureClient: function(serviceUrl) {
+            if (clientList[serviceUrl] !== undefined) {
+                currentClient = clientList[serviceUrl];
             } else {
-                lastSearch.data.link.forEach(function(link) {
-                    if (link.relation == "next") {
-                        hasLink = true;
-                    }
-                });
+                clientList[serviceUrl] = FHIR.client({ serviceUrl: serviceUrl });
+                currentClient = clientList[serviceUrl];
             }
-            return hasLink;
-        },
-        getNextOrPrevPage: function(direction, lastSearch) {
-            var deferred = $.Deferred();
-            $.when(fhirClient.api[direction]({bundle: lastSearch.data}))
-                .done(function(pageResult){
-                    var resources = [];
-                    if (pageResult.data.entry) {
-                        pageResult.data.entry.forEach(function(entry){
-                            resources.push(entry.resource);
-                        });
-                    }
-                    deferred.resolve(resources, pageResult);
-                });
-            return deferred;
         },
         queryResourceInstances: function(resource, searchValue, tokens, sort, count) {
             var deferred = $.Deferred();
@@ -74,7 +57,7 @@ angular.module('appointmentsApp.services', []).factory('$fhirApiServices', funct
                 searchParams.query['name'] = tokens;
             }
 
-            $.when(fhirClient.api.search(searchParams))
+            $.when(currentClient.api.search(searchParams))
                 .done(function(resourceSearchResult){
                     var resourceResults = [];
                     if (resourceSearchResult.data.entry) {
@@ -89,7 +72,7 @@ angular.module('appointmentsApp.services', []).factory('$fhirApiServices', funct
         },
         queryPatient: function(){
         var deferred = $.Deferred();
-        $.when(fhirClient.patient.read())
+        $.when(currentClient.patient.read())
             .done(function(patientResult){
                 var patient = {name:""};
                 angular.forEach(patientResult.name[0].given, function (value) {
@@ -109,19 +92,19 @@ angular.module('appointmentsApp.services', []).factory('$fhirApiServices', funct
         },
         getFhirProfileUser: function() {
             var deferred = $.Deferred();
-            if (fhirClient.userId === null ||
-                typeof fhirClient.userId === "undefined"){
+            if (currentClient.userId === null ||
+                typeof currentClient.userId === "undefined"){
                 deferred.resolve(null);
                 return deferred;
             }
-            var historyIndex = fhirClient.userId.lastIndexOf("/_history");
-            var userUrl = fhirClient.userId;
+            var historyIndex = currentClient.userId.lastIndexOf("/_history");
+            var userUrl = currentClient.userId;
             if (historyIndex > -1 ){
-                userUrl = fhirClient.userId.substring(0, historyIndex);
+                userUrl = currentClient.userId.substring(0, historyIndex);
             }
             var userIdSections = userUrl.split("/");
 
-            $.when(fhirClient.api.read({type: userIdSections[userIdSections.length-2], id: userIdSections[userIdSections.length-1]}))
+            $.when(currentClient.api.read({type: userIdSections[userIdSections.length-2], id: userIdSections[userIdSections.length-1]}))
                 .done(function(userResult){
 
                     var user = {name:""};
@@ -132,10 +115,10 @@ angular.module('appointmentsApp.services', []).factory('$fhirApiServices', funct
             return deferred;
         },
         getIntent: function() {
-            return fhirClient.tokenResponse.intent;
+            return currentClient.tokenResponse.intent;
         },
         hasPatientContext: function() {
-            return fhirClient.patient !== undefined;
+            return currentClient.patient !== undefined;
         }
     }
 });
