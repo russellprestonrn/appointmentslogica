@@ -150,10 +150,12 @@ function buildCalendarEvents(){
             "id":appointment.id,
             "color": selectedEndpoint.color,
             "title":(appointment.description!== undefined) ? appointment.description : appointment.type.text,
-            "start": appointment.start,
+            "start": new Date(appointment.start),
+//            "startOriginal" : appointment.start,
             "location": "Doctor's Office",
             "who": "Dr. Kurtis Giles,MD; Jane Smith, RN",
-            "end": (appointment.end !== undefined) ? appointment.end : determineEndtime(appointment.start, appointment.minutesDuration)
+            "end": (appointment.end !== undefined) ? new Date(appointment.end) : new Date(determineEndtime(appointment.start, appointment.minutesDuration))
+//            "endOriginal": (appointment.end !== undefined) ? appointment.end : determineEndtime(appointment.start, appointment.minutesDuration)
 
         })
     });
