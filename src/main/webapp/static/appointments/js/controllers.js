@@ -68,15 +68,20 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
             showMonths: 3,
             skipMonths: 3,
             onTimeRangeSelected: function(args) {
-//                $scope.listConfig.startDate = args.day;
+                $scope.monthConfig.startDate = args.day;
                 $scope.weekConfig.startDate = args.day;
                 $scope.dayConfig.startDate = args.day;
-//                loadEvents();
             }
         };
 
         $scope.dayConfig = {
             viewType: "Day"
+        };
+        
+        $scope.monthConfig = {
+            visible: false,
+            viewType: "List"
+            
         };
 
         $scope.weekConfig = {
@@ -87,11 +92,18 @@ angular.module('appointmentsApp.controllers', []).controller('mainController',
         $scope.showDay = function() {
             $scope.dayConfig.visible = true;
             $scope.weekConfig.visible = false;
+            $scope.monthConfig.visible = false;
         };
 
         $scope.showWeek = function() {
             $scope.dayConfig.visible = false;
+            $scope.monthConfig.visible = false;
             $scope.weekConfig.visible = true;
+        };
+        $scope.showMonth = function() {
+            $scope.monthConfig.visible = true;
+            $scope.dayConfig.visible = false;
+            $scope.weekConfig.visible = false;
         };
 
         function buildCalendar(){
