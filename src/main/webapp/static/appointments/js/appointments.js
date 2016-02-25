@@ -188,7 +188,7 @@ function initializeCalendar() {
                 placement:'top',
                 html:true,
                 container:'body',
-                content:    '<div class="event-title-box"><div class="event-title">'+event.title+'</div></div>' +
+                content:    '<div class="event-title-box"><div class="event-title">'+event.title+'</div><a href="#" class="event-close-button"><i class="fa fa-close"></i></a></div>' +
                     (event.location && '</div><div class="event-detail-line"><div class="event-label">Where:</div><div class="event-value">'+ event.location+'</div></div>' || '') +
                     (event.start && '<div class="event-detail-line"><div class="event-label">Start:</div><div class="event-value">'+ moment(new Date(event.start)).format('MMMM Do YYYY, h:mm a')+'</div></div>' || '') +
                     (event.end && '<div class="event-detail-line"><div class="event-label">End:</div><div class="event-value">'+moment(new Date(event.end)).format('MMMM Do YYYY, h:mm a')+'</div></div>' || '') +

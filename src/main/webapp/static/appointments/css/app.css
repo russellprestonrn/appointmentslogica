@@ -412,10 +412,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
     padding-right: 4px;
     width: 20px;
 }
-.popover-btn.font-red,
-.popover-btn.font-red i{
-    color: #fd595f;
-}
 
 .form-btn {
     height: 35px;
@@ -1028,10 +1024,17 @@ div.modal_cover {
     font-size: 16px;
     font-weight: 600;
     width: 100%;
-    padding: 5px 15px;
+    padding: 5px 25px 5px 15px;
     font-family: inherit;
     line-height: 1.1;
     color: inherit;
+}
+
+.event-close-button {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    color: #58585A;
 }
 
 .event-detail-line {
