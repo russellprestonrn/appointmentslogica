@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/cal.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,13 +36,12 @@
         </div>
     </div>
 </nav>
-
-
     <div class="CalendarStripe">
-        <div style="float:left; width: 160px; padding-left: 20px">
+        <div style="float:left; width: 160px">
             <daypilot-navigator id="navi" daypilot-config="navigatorConfig" ></daypilot-navigator>
         </div>
-        <div style="margin-left: 180px; padding-right: 20px">
+            
+        <div style="margin-left: 160px">
             <div class="space">
                 <button ng-click="showDay()">Day</button>
                 <button ng-click="showWeek()">Week</button>
@@ -52,7 +50,6 @@
             <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar>
         </div>
     </div>
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
