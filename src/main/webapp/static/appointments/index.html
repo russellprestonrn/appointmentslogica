@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="appointmentsApp">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Appointments</title>
     <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="fullcalendar/fullcalendar.min.css">
     <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/cal.css">
+    <script src="fullcalendar/lib/jquery.min.js"></script>
+    <script src="fullcalendar/bootstrap.min.js"></script>
+    <script src='fullcalendar/lib/moment.min.js'></script>
+    <script src="fullcalendar/fullcalendar.min.js"></script>
+    <script src="fhir-client/fhir-client.js"></script>
+    <script src="js/appointments.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -19,49 +24,26 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
     <![endif]-->
+
 </head>
-<body ng-app="appointmentsApp" ng-controller="mainController">
+<body>
 
 <!-- NAVIGATION -->
 <nav class="navbar" role="navigation">
     <div><img src="images/hspc-logo-main-web-top.png" srcset="images/hspc-logo-main-web-top@2x.png 2x"/></div>
-    <div class="navbar-center-title" center ng-style="centerWithOffset(95)">Appointments</div>
+    <div class="navbar-center-title" style="left:600px">Appointments</div>
     <div class="pull-right">
-        <div class="navbar-stack-name"><i class='fa' ng-class="user.resourceType === 'Patient' ? 'fa-user' : 'fa-user-md'"></i><span style="font-weight: bold"> {{user.name}}</span></div>
-        <!--<div class="navbar-stack-settings"><a href='#' uib-popover-template="'js/templates/settingsPopover.html'" popover-trigger="focus" popover-placement="bottom"><i class="fa fa-gear"></i> Settings</a></div>-->
-
-        <div class="navbar-stack-settings" uib-dropdown>
-            <a href='#' uib-dropdown-toggle><i class="fa fa-gear"></i> Settings</a>
-            <ul uib-dropdown-menu template-url="js/templates/settingsPopover.html" aria-labelledby="button-template-url">
+        <div class="navbar-stack-name"><i id="user-icon"></i><span id="user-name" style="font-weight: bold; padding-left: 5px;"></span></div>
+        <div class="navbar-stack-settings dropdown">
+            <a href='#' class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-gear"></i> Settings</a>
+            <ul id="settings-choices" class="dropdown-menu" aria-labelledby="dropdownMenu1">
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="CalendarStripe">
-    <div style="float:left; width: 160px">
-        <daypilot-navigator id="navi" daypilot-config="navigatorConfig" ></daypilot-navigator>
-    </div>
-    <div style="margin-left: 160px">
-        <div class="space">
-            <button ng-click="showDay()">Day</button>
-            <button ng-click="showWeek()">Week</button>
-        </div>
-        <daypilot-calendar id="day" daypilot-config="dayConfig" daypilot-events="events" ></daypilot-calendar>
-        <daypilot-calendar id="week" daypilot-config="weekConfig" daypilot-events="events" ></daypilot-calendar>
-    </div>
-</div>
+<div id='calendar'></div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
-<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
-<script src="daypilot/daypilot-all.min.js"></script>
-<script src="fhir-client/fhir-client.js"></script>
-<script src="js/app.js"></script>
-<script src="js/services.js"></script>
-<script src="js/controllers.js"></script>
-<script src="js/filters.js"></script>
-<script src="js/directives.js"></script>
 </body>
 </html>
