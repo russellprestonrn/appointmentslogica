@@ -1012,7 +1012,9 @@ div.modal_cover {
 
 .popover {
     z-index: 9999;
-    max-width: 400px;
+    max-width: 500px;
+    min-width: 400px;
+    min-height: 200px;
 }
 
 .event-title-box {
@@ -1032,9 +1034,11 @@ div.modal_cover {
 
 .event-close-button {
     position: absolute;
-    right: 6px;
-    top: 6px;
-    color: #58585A;
+    font-weight: 300;
+    font-size: 16px;
+    right: 7px;
+    top: 5px;
+    color: #8b8b8e;
 }
 
 .event-detail-line {
@@ -1062,6 +1066,28 @@ div.modal_cover {
     line-height: 1.1;
     color: inherit;
     margin-bottom: 10px;
+}
+
+.custom-url {
+    border-bottom: 2px solid #f4f4f4;
+    border-radius: 4px;
+    width: 140px
+}
+
+.fc-time-grid .fc-slats td {
+    height: 2.5em;
+    border-bottom: 0;
+}
+
+.fc-event {
+    position: relative;
+    display: block;
+    font-size: 1em;
+    line-height: 1.5;
+    border-radius: 3px;
+    border: 1px solid #3a87ad;
+    background-color: #3a87ad;
+    font-weight: 400;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {

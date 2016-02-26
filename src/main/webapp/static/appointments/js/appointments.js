@@ -12,6 +12,10 @@ var clientList = {
 
 var endpointChoices = [
     {
+        name: "Default",
+        color: "#00AEEF"
+    },
+    {
         name: "Epic",
         color: "#ba122b",
         serviceUrl: "https://open-ic.epic.com/FHIR/api/FHIR/DSTU2",
@@ -22,13 +26,14 @@ var endpointChoices = [
         }
     },
     {
-        name: "Proxy",
+        name: "Federated",
         color: "#4178be",
         serviceUrl: "https://fhir-open-api-dstu2.smarthealthit.org"
     },
     {
-        name: "SMART Launch",
-        color: "#00AEEF"
+        name: "Custom",
+        color: "#008000",
+        serviceUrl: ""
     }
 ];
 
@@ -76,7 +81,7 @@ function readAppointments(query)  {
         });
 }
 
-function settings(choosen){
+function settings(choosen, customUrl){
     var newSettings = "";
     endpointChoices.forEach(function(entry){
         if (entry.name === choosen) {
@@ -84,11 +89,15 @@ function settings(choosen){
         }
     });
 
-    if (selectedEndpoint === newSettings){
+    if (newSettings.name === "Custom" && customUrl !== undefined) {
+        newSettings.serviceUrl = customUrl;
+    }
+
+    if (selectedEndpoint === newSettings || newSettings.serviceUrl === ""){
         return;
     }
     selectedEndpoint = newSettings;
-    if (selectedEndpoint.name === "SMART Launch") {
+    if (selectedEndpoint.name === "Default") {
         initClient();
     } else {
         initNonSecureClient(selectedEndpoint.serviceUrl);
@@ -117,7 +126,11 @@ function settings(choosen){
 }
 
 $(document).on('click', 'div.dropdown ul.dropdown-menu li a', function (e) {
-    settings(e.currentTarget.id);
+    var customUrl;
+    if (e.currentTarget.id === "Custom") {
+        customUrl = document.getElementById("custom-url").value;
+    }
+    settings(e.currentTarget.id, customUrl);
 });
 
 function updateCalendarEvents() {
@@ -132,8 +145,11 @@ function buildSettings() {
     var html = "";
 
     endpointChoices.forEach(function(choice) {
-        html = html + '<li><a href="#" id="'+ choice.name + '">' + choice.name + '</a></li>';
+        if (choice.name !== "Custom") {
+            html = html + '<li><a href="#" id="'+ choice.name + '">' + choice.name + '</a></li>';
+        }
     });
+    html = html + '<li><a href="#" id="Custom">Custom</a></li><input class="custom-url" type="text" id="custom-url">';
     document.getElementById("settings-choices").innerHTML = html;
 }
 
@@ -174,6 +190,14 @@ function initializeCalendar() {
         selectable: true,
         eventLimit: true, // allow "more" link when too many events
         events: events,
+        businessHours: {
+            start: '08:00',
+            end: '17:00',
+
+            dow: [ 1, 2, 3, 4, 5 ]
+            // days of week. an array of zero-based day of week integers (0=Sunday)
+            // (Monday-Thursday in this example)
+        },
         dayClick: function(date, jsEvent, view) {
             $('#calendar').fullCalendar('gotoDate', date);
             $('#calendar').fullCalendar( 'unselect' );
@@ -188,11 +212,11 @@ function initializeCalendar() {
                 placement:'top',
                 html:true,
                 container:'body',
-                content:    '<div class="event-title-box"><div class="event-title">'+event.title+'</div><a href="#" class="event-close-button"><i class="fa fa-close"></i></a></div>' +
-                    (event.location && '</div><div class="event-detail-line"><div class="event-label">Where:</div><div class="event-value">'+ event.location+'</div></div>' || '') +
-                    (event.start && '<div class="event-detail-line"><div class="event-label">Start:</div><div class="event-value">'+ moment(new Date(event.start)).format('MMMM Do YYYY, h:mm a')+'</div></div>' || '') +
-                    (event.end && '<div class="event-detail-line"><div class="event-label">End:</div><div class="event-value">'+moment(new Date(event.end)).format('MMMM Do YYYY, h:mm a')+'</div></div>' || '') +
-                    (event.who && '<div class="event-detail-line"><div class="event-label">Who:</div><div class="event-value">'+ event.who+'</div></div>' || ''),
+                content:    '<div class="event-title-box"><div class="event-title">'+event.title+'</div><a href="#" class="event-close-button">&#10005;</a></div>' +
+                    (event.location && '</div><div class="event-detail-line"><div class="event-label">Where</div><div class="event-value">'+ event.location+'</div></div>' || '') +
+                    (event.start && '<div class="event-detail-line"><div class="event-label">Start</div><div class="event-value">'+ moment(new Date(event.start)).format('MMMM Do YYYY, h:mm a')+'</div></div>' || '') +
+                    (event.end && '<div class="event-detail-line"><div class="event-label">End</div><div class="event-value">'+moment(new Date(event.end)).format('MMMM Do YYYY, h:mm a')+'</div></div>' || '') +
+                    (event.who && '<div class="event-detail-line"><div class="event-label">Who</div><div class="event-value">'+ event.who+'</div></div>' || ''),
                 trigger: 'focus'
             });
             element.attr('tabindex', -1);
@@ -214,7 +238,7 @@ function windowResized() {
 
 function initClient(){
     endpointChoices.forEach(function(entry){
-        if (entry.name === "SMART Launch") {
+        if (entry.name === "Default") {
             selectedEndpoint = entry;
         }
     });
@@ -317,6 +341,15 @@ function getFhirProfileUser() {
             user.name = nameGivenFamily(userResult.data);
             user.id  = userResult.data.id;
             deferred.resolve(user);
+        });
+    return deferred;
+}
+
+function getResourceByReference(resourceType, resourceId){
+    var deferred = $.Deferred();
+    $.when(currentClient.api.read({type: resourceType, id: resourceId}))
+        .done(function(referenceResult){
+            deferred.resolve(referenceResult);
         });
     return deferred;
 }
