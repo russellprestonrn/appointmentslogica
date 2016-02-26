@@ -1014,7 +1014,7 @@ div.modal_cover {
     z-index: 9999;
     max-width: 500px;
     min-width: 400px;
-    min-height: 200px;
+    min-height: 160px;
 }
 
 .event-title-box {

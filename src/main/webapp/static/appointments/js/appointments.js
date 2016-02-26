@@ -66,6 +66,8 @@ initClient().then(function(){
                 document.getElementById("user-icon").className = "fa fa-user-md";
                 $('#calendar').fullCalendar( 'changeView', "agendaWeek" );
                 readAppointments({practitioner: profile.id});
+            }).fail(function(){
+                deferred.reject();
             });
     }
 });
@@ -75,10 +77,69 @@ function readAppointments(query)  {
     queryResourceInstances("Appointment", query)
         .done(function(resourceResults){
             resourceResults.forEach(function(resource) {
-                appointments.push(resource);
+                getParticipants(resource)
+                    .done(function(participants){
+                        resource.participants = participants;
+                        appointments.push(resource);
+                        buildCalendarEvents();
+                    }).fail(function(){
+                        deferred.reject();
+                    });
             });
-            buildCalendarEvents();
+        }).fail(function(){
+            deferred.reject();
         });
+}
+
+function getParticipants(resource)  {
+    var participantList = [];
+    var deferred = $.Deferred();
+
+    resource.participant.forEach(function(participant) {
+
+        var segments = participant.actor.reference.split("/");
+        participantList.push({
+            resourceType: segments[segments.length - 2],
+            id: segments[segments.length - 1]
+        });
+    });
+    getParticipant(participantList, 0).done(function(participants){
+        deferred.resolve(participants);
+    }).fail(function(){
+            deferred.reject();
+        });
+    return deferred;
+}
+
+function getParticipant(participantList, index)  {
+    var participants = [];
+    var deferred = $.Deferred();
+    $.when(currentClient.api.read({type: participantList[index].resourceType, id: participantList[index].id}))
+        .done(function(participantResult){
+            if (participantList.length > index + 1) {
+                getParticipant(participantList, ++index).done(function(nestedParticipants){
+                    participants = participants.concat(nestedParticipants);
+                    participants.push({
+                        resourceType: participantResult.data.resourceType,
+                        id: participantResult.data.id,
+                        name: nameGivenFamily(participantResult.data)
+                    });
+                    deferred.resolve(participants);
+                }).fail(function(){
+                        deferred.reject();
+                    });
+            } else {
+                participants.push({
+                    resourceType: participantResult.data.resourceType,
+                    id: participantResult.data.id,
+                    name: nameGivenFamily(participantResult.data)
+                });
+                deferred.resolve(participants);
+            }
+        }).fail(function(){
+            deferred.reject();
+        });
+    return deferred;
 }
 
 function settings(choosen, customUrl){
@@ -170,12 +231,45 @@ function buildCalendarEvents(){
             "color": selectedEndpoint.color,
             "title":(appointment.description!== undefined) ? appointment.description : appointment.type.text,
             "start": new Date(appointment.start),
-            "location": "Dr Giles' Office",
-            "who": "Dr Kurtis Giles,MD; Jane Smith,RN",
+            "location": (mockLocation(appointment) !== undefined) ? mockLocation(appointment) : "",
+            "who": buildAttendeesList(appointment),
             "end": (appointment.end !== undefined) ? new Date(appointment.end) : new Date(determineEndtime(appointment.start, appointment.minutesDuration))
         })
     });
     updateCalendarEvents();
+}
+
+function buildAttendeesList(appointment) {
+    var attendees = "";
+    appointment.participants.forEach(function(participant){
+        if (participant.resourceType === "Patient" || participant.resourceType === "Practitioner"){
+            if (attendees !== "") {
+                attendees = attendees + "; ";
+            }
+            attendees = attendees + participant.name;
+        }
+    });
+    return attendees;
+}
+
+function mockLocation(appointment) {
+    var location = "";
+    var practitioner = "";
+    appointment.participants.forEach(function(participant){
+        if (participant.resourceType === "Practitioner"){
+            practitioner = participant;
+        } else if (participant.resourceType === "Location") {
+            location = participant;
+        }
+    });
+
+    if (location !== "") {
+        return location;
+    } else if (practitioner !== "") {
+        return "Office of " + practitioner.name;
+    }
+
+    return undefined;
 }
 
 function initializeCalendar() {
@@ -295,6 +389,8 @@ function queryResourceInstances(resource, searchValue, tokens, sort, count) {
                 });
             }
             deferred.resolve(resourceResults, resourceSearchResult);
+        }).fail(function(){
+            deferred.reject();
         });
     return deferred;
 }
@@ -341,15 +437,8 @@ function getFhirProfileUser() {
             user.name = nameGivenFamily(userResult.data);
             user.id  = userResult.data.id;
             deferred.resolve(user);
-        });
-    return deferred;
-}
-
-function getResourceByReference(resourceType, resourceId){
-    var deferred = $.Deferred();
-    $.when(currentClient.api.read({type: resourceType, id: resourceId}))
-        .done(function(referenceResult){
-            deferred.resolve(referenceResult);
+        }).fail(function(){
+            deferred.reject();
         });
     return deferred;
 }
