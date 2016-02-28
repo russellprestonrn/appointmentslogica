@@ -41,6 +41,7 @@ initClient().then(function(){
     windowResized();
     buildSettings();
     initializeCalendar();
+    setUpScrollHandling();
 
     if (hasPatientContext()) {
         queryPatient()
@@ -272,6 +273,29 @@ function mockLocation(appointment) {
     return undefined;
 }
 
+var locked = false;
+var runOnScroll =  function(evt) {
+    if(locked) return;
+    locked = true;
+    $('.popover').each( function() {
+        if( $(evt.target).parents(".fc-time-grid-event").get(0) !== $(this).prev().get(0) ) {
+            $(this).popover('hide');
+        }
+    });
+    $('#calendar').fullCalendar( 'unselect' );
+    locked = false;
+};
+
+function setUpScrollHandling() {
+    var elements = document.querySelectorAll(".fc-scroller");
+    elements = Array.prototype.slice.call(elements);
+
+    // and then make each element do something on scroll
+    elements.forEach(function(element) {
+        element.addEventListener("scroll", runOnScroll);
+    });
+}
+
 function initializeCalendar() {
     $('#calendar').fullCalendar({
         header: {
@@ -314,6 +338,19 @@ function initializeCalendar() {
                 trigger: 'focus'
             });
             element.attr('tabindex', -1);
+            $('body').on('click', function (e) {
+                if (!element.is(e.target) && element.has(e.target).length === 0 && $('.popover').has(e.target).length === 0)
+                    element.popover('hide');
+                $('#calendar').fullCalendar( 'unselect' );
+            });
+
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+            $(this).popover('show');
+            return false;
+        },
+        viewRender: function(view,element){
+            setUpScrollHandling();
         }
     });
 }
