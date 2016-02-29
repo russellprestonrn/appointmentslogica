@@ -22,18 +22,34 @@ var endpointChoices = [
         idMapper: {
             COREPATIENT1: "Tw7SP1sBqQoduuaDojd44wcx8KAzmRCwo5pnhZcoN520B",
             COREPATIENT2: "TC1.2m5XdQszeI0Nz13l-O9blxzpCHD2a4YXtKyw-BnEB",
-            COREPATIENT3: "TlJf9j92mA7CV.8nJyh9v4IMR3c6Pm7UYkRw3NRE-bHYB"
+            COREPATIENT3: "TlJf9j92mA7CV.8nJyh9v4IMR3c6Pm7UYkRw3NRE-bHYB",
+            COREPRACTITIONER1: "TVy8RAXnmRUPk1qD4uj.ZnAB",
+            COREPRACTITIONER4: "TimwOSrxR9gFuHZTwFBMzlgB"
         }
     },
     {
         name: "Federated",
         color: "#4178be",
-        serviceUrl: "https://fhir-open-api-dstu2.smarthealthit.org"
-    },
-    {
-        name: "Custom",
-        color: "#008000",
-        serviceUrl: ""
+        serviceUrl: "http://dataphoria.org/datafhir",
+        sources: [
+            {
+                source: "Epic",
+                color: "#ba122b"
+            },
+            {
+                source: "Vista",
+                color: "#4178be"
+            },
+            {
+                source: "HSPC",
+                color: "#00AEEF"
+            }
+        ]
+//    },
+//    {
+//        name: "Custom",
+//        color: "#008000",
+//        serviceUrl: ""
     }
 ];
 
@@ -68,7 +84,6 @@ initClient().then(function(){
                 $('#calendar').fullCalendar( 'changeView', "agendaWeek" );
                 readAppointments({practitioner: profile.id});
             }).fail(function(){
-                deferred.reject();
             });
     }
 });
@@ -78,18 +93,40 @@ function readAppointments(query)  {
     queryResourceInstances("Appointment", query)
         .done(function(resourceResults){
             resourceResults.forEach(function(resource) {
-                getParticipants(resource)
-                    .done(function(participants){
-                        resource.participants = participants;
-                        appointments.push(resource);
-                        buildCalendarEvents();
-                    }).fail(function(){
-                        deferred.reject();
+                // Check for source Extension
+                if (typeof resource.extension !== "undefined") {
+                    resource.extension.forEach(function (extension) {
+                        if (extension.url == "http://hspconsortium.org/extensions/source-system") {
+                            resource.color = getColor(extension.valueString, selectedEndpoint);
+                        }
                     });
+                }
+                if (selectedEndpoint.name !== "Federated" ) {
+                    getParticipants(resource)
+                        .done(function(participants){
+                            resource.participants = participants;
+                            appointments.push(resource);
+                            buildCalendarEvents();
+                        }).fail(function(){
+                        });
+                } else {
+                    appointments.push(resource);
+                }
             });
+            buildCalendarEvents();
+
         }).fail(function(){
-            deferred.reject();
         });
+}
+
+function getColor(source, endpoint) {
+    var color;
+    endpoint.sources.forEach(function(sourceItem){
+        if (sourceItem.source === source){
+            color = sourceItem.color;
+        }
+    });
+    return color;
 }
 
 function getParticipants(resource)  {
@@ -99,26 +136,26 @@ function getParticipants(resource)  {
     resource.participant.forEach(function(participant) {
 
         var segments = participant.actor.reference.split("/");
-        participantList.push({
-            resourceType: segments[segments.length - 2],
-            id: segments[segments.length - 1]
-        });
+            participantList.push({
+                resourceType: segments[segments.length - 2],
+                id: segments[segments.length - 1]
+            });
     });
-    getParticipant(participantList, 0).done(function(participants){
-        deferred.resolve(participants);
-    }).fail(function(){
-            deferred.reject();
-        });
+        getParticipant(participantList, 0).done(function(participants){
+            deferred.resolve(participants);
+        }).fail(function(){
+                deferred.reject();
+            });
     return deferred;
 }
 
 function getParticipant(participantList, index)  {
     var participants = [];
     var deferred = $.Deferred();
-    $.when(currentClient.api.read({type: participantList[index].resourceType, id: participantList[index].id}))
+        $.when(currentClient.api.read({type: participantList[index].resourceType, id: participantList[index].id}))
         .done(function(participantResult){
             if (participantList.length > index + 1) {
-                getParticipant(participantList, ++index).done(function(nestedParticipants){
+                    getParticipant(participantList, ++index).done(function(nestedParticipants){
                     participants = participants.concat(nestedParticipants);
                     participants.push({
                         resourceType: participantResult.data.resourceType,
@@ -211,11 +248,13 @@ function buildSettings() {
             html = html + '<li><a href="#" id="'+ choice.name + '">' + choice.name + '</a></li>';
         }
     });
-    html = html + '<li><a href="#" id="Custom">Custom</a></li><input class="custom-url" type="text" id="custom-url">';
+//    html = html + '<li><a href="#" id="Custom">Custom</a></li><input class="custom-url" type="text" id="custom-url">';
     document.getElementById("settings-choices").innerHTML = html;
 }
 
 function determineEndtime(start, duration) {
+    if (duration === undefined)
+        return undefined;
     var endTime = new Date(start);
     endTime.setMinutes(endTime.getMinutes() + duration);
     return endTime.toISOString();
@@ -229,8 +268,8 @@ function buildCalendarEvents(){
     appointments.forEach(function(appointment) {
         events.push({
             "id":appointment.id,
-            "color": selectedEndpoint.color,
-            "title":(appointment.description!== undefined) ? appointment.description : appointment.type.text,
+            "color": (appointment.color !== undefined) ? appointment.color : selectedEndpoint.color,
+            "title":(appointment.description !== undefined) ? appointment.description : appointment.type.text,
             "start": new Date(appointment.start),
             "location": (mockLocation(appointment) !== undefined) ? mockLocation(appointment) : "",
             "who": buildAttendeesList(appointment),
@@ -242,35 +281,45 @@ function buildCalendarEvents(){
 
 function buildAttendeesList(appointment) {
     var attendees = "";
-    appointment.participants.forEach(function(participant){
-        if (participant.resourceType === "Patient" || participant.resourceType === "Practitioner"){
-            if (attendees !== "") {
-                attendees = attendees + "; ";
+    var currentUserFound = false;
+    if (appointment.participants !== undefined) {
+        appointment.participants.forEach(function(participant){
+            if (participant.resourceType === "Patient" || participant.resourceType === "Practitioner"){
+                if (attendees !== "") {
+                    attendees = attendees + "; ";
+                }
+                if (participant.name === user.name) {
+                    currentUserFound = true;
+                }
+                attendees = attendees + participant.name;
             }
-            attendees = attendees + participant.name;
-        }
-    });
+        });
+    }
+    if (!currentUserFound) {
+        attendees = user.name + "; " + attendees;
+    }
     return attendees;
 }
 
 function mockLocation(appointment) {
     var location = "";
     var practitioner = "";
-    appointment.participants.forEach(function(participant){
-        if (participant.resourceType === "Practitioner"){
-            practitioner = participant;
-        } else if (participant.resourceType === "Location") {
-            location = participant;
-        }
-    });
-
+    if (appointment.participants !== undefined) {
+        appointment.participants.forEach(function(participant){
+            if (participant.resourceType === "Practitioner"){
+                practitioner = participant;
+            } else if (participant.resourceType === "Location") {
+                location = participant;
+            }
+        });
+    }
     if (location !== "") {
         return location;
     } else if (practitioner !== "") {
         return "Office of " + practitioner.name;
+    } else {
+        return "Doctor's Office";
     }
-
-    return undefined;
 }
 
 var locked = false;
@@ -437,12 +486,14 @@ function queryPatient(){
     $.when(currentClient.patient.read())
         .done(function(patientResult){
             var patient = {name:""};
-            patientResult.name[0].given.forEach(function(value) {
-                patient.name = patient.name + ' ' + String(value);
-            });
-            patientResult.name[0].family.forEach(function(value) {
-                patient.name = patient.name + ' ' + value;
-            });
+            patient.name = nameGivenFamily(patientResult);
+//
+//            patientResult.name[0].given.forEach(function(value) {
+//                patient.name = patient.name + ' ' + String(value);
+//            });
+//            patientResult.name[0].family.forEach(function(value) {
+//                patient.name = patient.name + ' ' + value;
+//            });
             patient.sex = patientResult.gender;
             patient.dob = patientResult.birthDate;
             patient.id  = patientResult.id;
@@ -490,7 +541,8 @@ function nameGivenFamily(p) {
             var patientName = p && p.name && p.name[0];
             if (!patientName) return null;
 
-            return patientName.given.join(" ") + " " + patientName.family.join(" ");
+            patientName = patientName.given.join(" ") + " " + patientName.family.join(" ");
+            return patientName.trim();
         } else {
             var practitionerName = p && p.name;
             if (!practitionerName) return null;
@@ -499,6 +551,6 @@ function nameGivenFamily(p) {
             if (practitionerName.suffix) {
                 practitioner = practitioner + ", " + practitionerName.suffix.join(", ");
             }
-            return practitioner;
+            return practitioner.trim();
         }
 }
