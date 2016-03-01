@@ -449,35 +449,61 @@ function initNonSecureClient(serviceUrl) {
 function queryResourceInstances(resource, searchValue, tokens, sort, count) {
     var deferred = $.Deferred();
 
-    if (count === undefined) {
-        count = 50;
-    }
+    if (selectedEndpoint.name === "Federated"){
 
-    var searchParams = {type: resource, count: count};
-    searchParams.query = {};
-    if (searchValue !== undefined) {
-        searchParams.query = searchValue;
-    }
-    if (typeof sort !== 'undefined' ) {
-        searchParams.query['$sort'] = sort;
-    }
-    if (typeof sort !== 'undefined' ) {
-        searchParams.query['name'] = tokens;
-    }
-
-    $.when(currentClient.api.search(searchParams))
-        .done(function(resourceSearchResult){
-            var resourceResults = [];
-            if (resourceSearchResult.data.entry) {
-                resourceSearchResult.data.entry.forEach(function(entry){
-                    entry.resource.fullUrl = entry.fullUrl;
-                    resourceResults.push(entry.resource);
-                });
+        var params = "";
+        for(var propertyName in searchValue) {
+            if (searchValue.hasOwnProperty(propertyName)) {
+                if (params !== "")
+                {
+                    params = params + "&";
+                }
+                params = params + propertyName + "=" + searchValue[propertyName];
             }
-            deferred.resolve(resourceResults, resourceSearchResult);
-        }).fail(function(){
-            deferred.reject();
-        });
+        }
+        $.get(clientList.secureFhirClient.server.serviceUrl + '/_services/smart/federated?uri=/' + resource + '?' + params,
+            function(resourceSearchResult, status){
+                var resourceResults = [];
+                if (resourceSearchResult.entry) {
+                    resourceSearchResult.entry.forEach(function(entry){
+                        entry.resource.fullUrl = entry.fullUrl;
+                        resourceResults.push(entry.resource);
+                    });
+                }
+                deferred.resolve(resourceResults, resourceSearchResult);
+            });
+    } else {
+
+        if (count === undefined) {
+            count = 50;
+        }
+
+        var searchParams = {type: resource, count: count};
+        searchParams.query = {};
+        if (searchValue !== undefined) {
+            searchParams.query = searchValue;
+        }
+        if (typeof sort !== 'undefined' ) {
+            searchParams.query['$sort'] = sort;
+        }
+        if (typeof sort !== 'undefined' ) {
+            searchParams.query['name'] = tokens;
+        }
+
+        $.when(currentClient.api.search(searchParams))
+            .done(function(resourceSearchResult){
+                var resourceResults = [];
+                if (resourceSearchResult.data.entry) {
+                    resourceSearchResult.data.entry.forEach(function(entry){
+                        entry.resource.fullUrl = entry.fullUrl;
+                        resourceResults.push(entry.resource);
+                    });
+                }
+                deferred.resolve(resourceResults, resourceSearchResult);
+            }).fail(function(){
+                deferred.reject();
+            });
+    }
     return deferred;
 }
 
