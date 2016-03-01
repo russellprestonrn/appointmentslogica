@@ -30,7 +30,7 @@ var endpointChoices = [
     {
         name: "Federated",
         color: "#4178be",
-        serviceUrl: "http://dataphoria.org/datafhir",
+        serviceUrl: "https://dataphoria.org/datafhir",
         sources: [
             {
                 source: "Epic",
