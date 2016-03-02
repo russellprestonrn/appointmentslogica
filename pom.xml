@@ -17,20 +17,21 @@
     <description>Application for Viewing Appointments</description>
     <url>https://healthservices.atlassian.net/wiki/display/HSPC/Healthcare+Services+Platform+Consortium</url>
 
-    <!-- SSH configuration -->
+    <!-- HTTPS configuration -->
     <!--
         <scm>
-            <connection>scm:git:ssh://git@bitbucket.org/travistcummings/hspconsortium/reference-impl.git</connection>
-            <developerConnection>scm:git:ssh://git@bitbucket.org/travistcummings/hspconsortium/reference-impl.git</developerConnection>
-            <url>https://bitbucket.org/travistcummings/hspconsortium/reference-impl.git</url>
-        </scm>
-    -->
-
-    <!-- HTTPS configuration -->
-    <scm>
         <url>https://bitbucket.org/hspconsortium/appointments</url>
         <connection>scm:git:https://bitbucket.org/hspconsortium/appointments.git</connection>
         <developerConnection>scm:git:https://bitbucket.org/hspconsortium/appointments.git</developerConnection>
+    </scm>
+-->
+
+    <!-- SSH configuration -->
+    <scm>
+        <connection>scm:git:ssh://git@bitbucket.org/hspconsortium/appointments.git</connection>
+        <developerConnection>scm:git:ssh://git@bitbucket.org/hspconsortium/appointments.git</developerConnection>
+        <url>https://bitbucket.org/hspconsortium/appointments.git</url>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
