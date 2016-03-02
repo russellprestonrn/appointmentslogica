@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -10,21 +9,12 @@
 
     <groupId>org.hspconsortium.scheduling</groupId>
     <artifactId>appointments</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Appointments</name>
     <description>Application for Viewing Appointments</description>
     <url>https://healthservices.atlassian.net/wiki/display/HSPC/Healthcare+Services+Platform+Consortium</url>
-
-    <!-- HTTPS configuration -->
-<!--
-    <scm>
-        <url>https://bitbucket.org/hspconsortium/appointments</url>
-        <connection>scm:git:https://bitbucket.org/hspconsortium/appointments.git</connection>
-        <developerConnection>scm:git:https://bitbucket.org/hspconsortium/appointments.git</developerConnection>
-    </scm>
--->
 
     <!-- SSH configuration -->
     <scm>
