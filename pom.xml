@@ -9,7 +9,7 @@
 
     <groupId>org.hspconsortium.scheduling</groupId>
     <artifactId>appointments</artifactId>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Appointments</name>
@@ -21,7 +21,7 @@
         <connection>scm:git:ssh://git@bitbucket.org/hspconsortium/appointments.git</connection>
         <developerConnection>scm:git:ssh://git@bitbucket.org/hspconsortium/appointments.git</developerConnection>
         <url>https://bitbucket.org/hspconsortium/appointments.git</url>
-        <tag>appointments-0.2</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
