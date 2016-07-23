@@ -5,9 +5,23 @@
     <title>HSPC Appointments</title>
     <script src="fhir-client/fhir-client.js"></script>
     <script>
+        var client_id = "hspc_appointments";
+
+        var iss = getParameterByName('iss');
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        if (iss === "https://secure-api.hspconsortium.org/hspcdemo/data") {
+            client_id = "e2d1017a-050f-4ae6-9e30-4f2b254067a5";
+        }
+
         FHIR.oauth2.authorize({
-        "client_id": "hspc_appointments",
-        "scope":  "user/*.* patient/*.read launch openid profile "
+        "client_id": client_id,
+        "scope":  "user/*.* patient/*.read launch openid profile"
         });
     </script>
 </head>
