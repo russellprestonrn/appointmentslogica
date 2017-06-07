@@ -1,18 +1,25 @@
-# README #
+# HSPC Appointments
 
-Welcome to the HSPC Appointments!  
+## Setup
 
-### How do I get set up? ###
+HSPC Appointments is hosted as a static web app.
+This example shows how to host it using a system such as http-server <https://www.npmjs.com/package/http-server>.
 
-#### Build and Deploy ####
-    mvn clean install
-    copy target/hspc-appointments.war to a web container
+Install http-server
+````
+$ npm install http-server -g
+````
 
-#### Configuration ####
-    HSPC Appointments is a SMART on FHIR application.  It must be launched from a EHR simulator such as the HSPC Sandbox.  You may launch a local deployment of this application using the [HSPC Sandbox](https://sandbox.hspconsortium.org/hspc-sandbox-manager) "Custom App" Launch Scenario.
+## Hosting
+````
+$ http-server src -p 8086
+````
 
-* App API: hspc_appointments
-* Launch URL: http://localhost:8095/static/appointments/launch.html
+The app contains dynamic registration at:
+* manifest: <http://localhost:8086/.well-known/smart/manifest.json>
 
-### Where to go from here ###
-https://healthservices.atlassian.net/wiki/display/HSPC/Healthcare+Services+Platform+Consortium
+The app is available for SMART Launch at:
+
+* launch_url: <http://localhost:8086/launch.html>
+* redirect_url: <http://localhost:8086/launch.html>
+* image_url: <http://localhost:8086/images/appointments.png>
