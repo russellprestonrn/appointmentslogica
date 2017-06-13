@@ -1,0 +1,12 @@
+{
+  "name": "hspc-appointments",
+  "version": "1.0.1",
+  "scripts": {
+    "serve": "./node_modules/http-server/bin/http-server src -p 8095"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  }
+}

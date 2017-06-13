@@ -1,11 +1,10 @@
 {
   "software_id": "org.hspconsortium.appointments:appointments:1.0.0",
   "client_name": "HSPC Appointments",
-  "client_uri": "http://localhost:8080/index.html",
-  "logo_uri": "http://localhost:8080/images/appointments.png",
-  "launch_url": "http://localhost:8080/launch.html",
+  "logo_uri": "https://content.hspconsortium.org/images/hspc-appointments/logo/appointments.png",
+  "launch_url": "https://appointments.hspconsortium.org/launch.html",
   "redirect_uris": [
-    "http://localhost:8080/index.html"
+    "https://appointments.hspconsortium.org/"
   ],
   "scope": "user/*.* patient/*.read launch openid profile",
   "token_endpoint_auth_method": "none",
