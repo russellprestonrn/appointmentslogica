@@ -10,6 +10,10 @@ npm install
 npm run serve
 ````
 
+The app contains dynamic registration at:
+
+* manifest: http://localhost:8095/.well-known/smart/manifest.json
+
 The app is available for SMART Launch at:
 
 * launch_url: http://localhost:8095/launch.html
