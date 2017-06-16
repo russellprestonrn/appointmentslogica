@@ -2,7 +2,7 @@
   "name": "hspc-appointments",
   "version": "1.0.1",
   "scripts": {
-    "serve": "./node_modules/http-server/bin/http-server src -p 8095"
+    "serve": "./node_modules/http-server/bin/http-server src -p 8095 --cors"
   },
   "dependencies": {
   },
