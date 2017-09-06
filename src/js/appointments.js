@@ -563,20 +563,26 @@ function hasPatientContext() {
 
 
 function nameGivenFamily(p) {
-        if (p.resourceType === "Patient") {
-            var patientName = p && p.name && p.name[0];
-            if (!patientName) return null;
+    var isArrayName = p && p.name && p.name[0];
+    var personName;
 
-            patientName = patientName.given.join(" ") + " " + patientName.family.join(" ");
-            return patientName.trim();
-        } else {
-            var practitionerName = p && p.name;
-            if (!practitionerName) return null;
+    if (isArrayName) {
+        personName = p && p.name && p.name[0];
+        if (!personName) return null;
 
-            var practitioner =  practitionerName.given.join(" ") + " " + practitionerName.family.join(" ");
-            if (practitionerName.suffix) {
-                practitioner = practitioner + ", " + practitionerName.suffix.join(", ");
-            }
-            return practitioner.trim();
-        }
+    } else {
+        personName = p && p.name;
+        if (!personName) return null;
+    }
+
+    var user;
+    if (Object.prototype.toString.call(personName.family) === '[object Array]') {
+        user = personName.given.join(" ") + " " + personName.family.join(" ");
+    } else {
+        user = personName.given.join(" ") + " " + personName.family;
+    }
+    if (personName.suffix) {
+        user = user + ", " + personName.suffix.join(", ");
+    }
+    return user;
 }
