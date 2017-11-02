@@ -33,21 +33,21 @@ pipelines:
     feature/*:
       - step:
           caches:
-            - maven
+            - node
           script:
-            - mvn -B verify
+            - npm install
     release/*:
       - step:
           caches:
-            - maven
+            - node
           script:
-            - mvn -B verify
+            - npm install
     hotfix/*:
       - step:
           caches:
-            - maven
+            - node
           script:
-            - mvn -B verify
+            - npm install
     master:
       - step:
           caches:
