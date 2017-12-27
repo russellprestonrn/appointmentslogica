@@ -56,6 +56,6 @@ pipelines:
             - export TASK_VERSION=$(aws ecs register-task-definition --family hspc-appointments --container-definitions $(cat container-definitions_prod.json | jq -c '.')  | jq --raw-output '.taskDefinition.revision')
             - echo "Registered ECS Task Definition - " $TASK_VERSION
             # update the service to use the latest task definition
-            - aws ecs update-service --cluster $TARGET_AWS_CLUSTER_PROD --service $TARGET_AWS_SERVICE --task-definition hspc-appointments:$TASK_VERSION
+#            - aws ecs update-service --cluster $TARGET_AWS_CLUSTER_PROD --service $TARGET_AWS_SERVICE --task-definition hspc-appointments:$TASK_VERSION
 options:
   docker: true
