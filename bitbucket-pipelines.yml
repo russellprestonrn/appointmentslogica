@@ -1,6 +1,8 @@
 # This project uses the GitFlow Workflow as defined here:
 #   https://www.atlassian.com/git/tutorials/comparing-workflows#GitFlow-workflow
 image: hspconsortium/hspc-ubuntu-base
+clone:           # the 'clone' section
+  depth: 1       # the depth, in this case the clone will contain last one commits
 
 pipelines:
   default:
@@ -11,51 +13,87 @@ pipelines:
   branches:
     develop:
       - step:
+          name: build docker and upload to docker hub
           caches:
             - node
           script:
-            # build docker image and push to nexus.interopion.com:18083 (docker-interopion)
-            - export IMAGE_NAME=$(cat container-definitions_test.json | jq --raw-output '.[0].image')
-            - docker login -u $NEXUS_USR -p $NEXUS_PWD nexus.hspconsortium.org:18083
-            - docker build -t $IMAGE_NAME .
-            - docker push $IMAGE_NAME
-            # register the ECS task definition and capture the version
-            - export TASK_VERSION=$(aws ecs register-task-definition --family hspc-appointments --container-definitions $(cat container-definitions_test.json | jq -c '.')  | jq --raw-output '.taskDefinition.revision')
-            - echo "Registered ECS Task Definition - " $TASK_VERSION
-            # update the service to use the latest task definition
-            - aws ecs update-service --cluster $TARGET_AWS_CLUSTER --service $TARGET_AWS_SERVICE --task-definition hspc-appointments:$TASK_VERSION
-    feature/*:
+            - export ACTIVE_ENV=test
+            - export PROJECT_NAME=appointments
+            - cd ci
+            - . ci-0-set-properties.sh
+            - . ci-1-prepare-sources.sh
+            - . ci-2-docker-image.sh
       - step:
+          name: update the aws task definition
           caches:
             - node
           script:
-            - npm install
-    release/*:
+            - export ACTIVE_ENV=test
+            - export PROJECT_NAME=appointments
+            - cd ci
+            - . ci-0-set-properties.sh
+            - . ci-3-aws-task-update.sh
       - step:
+          name: update the aws service
           caches:
             - node
           script:
-            - npm install
-    hotfix/*:
-      - step:
-          caches:
-            - node
-          script:
-            - npm install
+            - export ACTIVE_ENV=test
+            - export PROJECT_NAME=appointments
+            - . ci/ci-0-set-properties.sh
+            - . ci/ci-4-aws-service-update.sh
     master:
       - step:
+          name: build docker and upload to docker hub
           caches:
             - node
           script:
-            # build docker image and push to nexus.interopion.com:18083 (docker-interopion)
-            - export IMAGE_NAME=$(cat container-definitions_prod.json | jq --raw-output '.[0].image')
-            - docker login -u $NEXUS_USR -p $NEXUS_PWD nexus.hspconsortium.org:18083
-            - docker build -t $IMAGE_NAME .
-            - docker push $IMAGE_NAME
-            # register the ECS task definition and capture the version
-            - export TASK_VERSION=$(aws ecs register-task-definition --family hspc-appointments --container-definitions $(cat container-definitions_prod.json | jq -c '.')  | jq --raw-output '.taskDefinition.revision')
-            - echo "Registered ECS Task Definition - " $TASK_VERSION
-            # update the service to use the latest task definition
-#            - aws ecs update-service --cluster $TARGET_AWS_CLUSTER_PROD --service $TARGET_AWS_SERVICE --task-definition hspc-appointments:$TASK_VERSION
+            - export ACTIVE_ENV=prod
+            - export PROJECT_NAME=appointments
+            - cd ci
+            - . ci-0-set-properties.sh
+            - . ci-1-prepare-sources.sh
+            - . ci-2-docker-image.sh
+      - step:
+          name: update the aws task definition
+          caches:
+            - node
+          script:
+            - export ACTIVE_ENV=prod
+            - export PROJECT_NAME=appointments
+            - cd ci
+            - . ci-0-set-properties.sh
+            - . ci-3-aws-task-update.sh
+      - step:
+          name: update the aws service
+          caches:
+            - node
+          trigger: manual
+          script:
+            - export ACTIVE_ENV=prod
+            - export PROJECT_NAME=appointments
+            - . ci/ci-0-set-properties.sh
+            - . ci/ci-4-aws-service-update.sh
+    feature/*:
+      - step:
+          name: build the source code
+          caches:
+            - node
+          script:
+            - echo "success"
+    release/*:
+      - step:
+          name: build the source code
+          caches:
+            - node
+          script:
+            - echo "success"
+    hotfix/*:
+      - step:
+          name: build the source code
+          caches:
+            - node
+          script:
+            - echo "success"
 options:
   docker: true

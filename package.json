@@ -1,11 +1,20 @@
 {
   "name": "hspc-appointments",
   "version": "1.0.4",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/hspconsortium/appointments.git"
+  },
   "scripts": {
     "serve": "./node_modules/http-server/bin/http-server src -p 8095 --cors"
   },
   "dependencies": {},
   "devDependencies": {
     "http-server": "^0.10.0"
+  },
+  "config": {
+    "port": "8095",
+    "memory": "100"
   }
 }
