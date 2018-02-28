@@ -15,6 +15,7 @@
   },
   "config": {
     "port": "8095",
-    "memory": "100"
+    "memory": "100",
+    "operations-name": "appointments"
   }
 }
