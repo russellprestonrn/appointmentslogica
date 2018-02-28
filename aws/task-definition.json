@@ -1,0 +1,41 @@
+{
+  "family": "appointments-test",
+  "containerDefinitions": [
+    {
+      "name": "appointments-test",
+      "image": "hspconsortium/appointments:1.0.4",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "containerPort": 8095,
+          "hostPort": 0,
+          "protocol": "tcp"
+        }
+      ],
+      "memoryReservation": 100,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/appointments-test",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "essential": true,
+      "environment": [
+        {
+          "name": "JASYPT_ENCRYPTOR_PASSWORD",
+          "value": ""
+        },
+        {
+          "name": "SPRING_PROFILES_ACTIVE",
+          "value": ""
+        },
+        {
+          "name": "TARGET_ENV",
+          "value": "test"
+        }
+      ]
+    }
+  ]
+}
