@@ -1,0 +1,457 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT21",
+        "status": "booked",
+        "description": "Heart valve disorder stress test",
+        "start": "2018-03-15T16:30:00Z",
+        "end": "2018-03-15T17:30:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT21"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT22",
+        "status": "booked",
+        "description": "Heart valve disorder stress test",
+        "start": "2018-03-15T20:30:00Z",
+        "end": "2018-03-15T21:30:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT22"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT23",
+        "status": "booked",
+        "description": "Discuss test results",
+        "start": "2018-03-15T21:30:00Z",
+        "end": "2018-03-15T22:30:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT23"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT24",
+        "status": "booked",
+        "description": "Grief counseling",
+        "start": "2018-03-15T23:00:00Z",
+        "end": "2018-03-16T00:00:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT24"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT25",
+        "status": "booked",
+        "description": "Discuss test results",
+        "start": "2018-03-16T20:00:00Z",
+        "end": "2018-03-16T21:00:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT25"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT26",
+        "status": "booked",
+        "description": "Heart valve stress test",
+        "start": "2018-03-18T18:00:00Z",
+        "end": "2018-03-18T19:00:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT26"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT27",
+        "status": "booked",
+        "description": "Discuss test results",
+        "start": "2018-03-19T17:00:00Z",
+        "end": "2018-03-19T18:00:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT27"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT28",
+        "status": "booked",
+        "description": "Grief counselling",
+        "start": "2018-03-20T23:00:00Z",
+        "end": "2018-03-21T00:00:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT28"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT29",
+        "status": "booked",
+        "description": "Grief counselling",
+        "start": "2018-03-23T22:00:00Z",
+        "end": "2018-03-23T23:00:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT29"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT30",
+        "status": "booked",
+        "description": "Grief counselling",
+        "start": "2018-03-26T22:00:00Z",
+        "end": "2018-03-26T23:00:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT30"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "HSPC-APPOINTMENT31",
+        "status": "booked",
+        "description": "Grief counselling",
+        "start": "2018-03-29T22:00:00Z",
+        "end": "2018-03-29T23:00:00Z",
+        "participant": [
+          {
+            "actor": {
+              "reference": "Patient/SMART-9995679"
+            },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "code": "ATND",
+                    "display": "attender"
+                  }
+                ],
+                "text": "attender"
+              }
+            ],
+            "actor": {
+              "reference": "Practitioner/SMART-Practitioner-1234"
+            },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Appointment/HSPC-APPOINTMENT31"
+      }
+    }
+  ]
+}
