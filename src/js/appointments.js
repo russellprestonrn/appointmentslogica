@@ -96,7 +96,7 @@ function readAppointments(query)  {
                 // Check for source Extension
                 if (typeof resource.extension !== "undefined") {
                     resource.extension.forEach(function (extension) {
-                        if (extension.url == "http://hspconsortium.org/extensions/source-system") {
+                        if (extension.url == "http://logicahealth.org/extensions/source-system") {
                             resource.color = getColor(extension.valueString, selectedEndpoint);
                         }
                     });
