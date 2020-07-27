@@ -18,4 +18,4 @@ The app is available for SMART Launch at:
 
 * launch_url: http://localhost:8095/launch.html
 * redirect_url: http://localhost:8095/
-* image_url: https://content.hspconsortium.org/images/hspc-appointments/logo/appointments.png
+* image_url: https://content.logicahealth.org/images/hspc-appointments/logo/appointments.png

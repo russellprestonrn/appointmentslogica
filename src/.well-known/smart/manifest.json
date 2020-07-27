@@ -1,10 +1,10 @@
 {
   "software_id": "org.hspconsortium.appointments:appointments:1.0.0",
   "client_name": "HSPC Appointments",
-  "logo_uri": "https://content.hspconsortium.org/images/hspc-appointments/logo/appointments.png",
-  "launch_url": "https://appointments.hspconsortium.org/launch.html",
+  "logo_uri": "https://content.logicahealth.org/images/hspc-appointments/logo/appointments.png",
+  "launch_url": "https://appointments.logicahealth.org/launch.html",
   "redirect_uris": [
-    "https://appointments.hspconsortium.org/"
+    "https://appointments.logicahealth.org/"
   ],
   "scope": "user/*.* patient/*.read launch openid profile",
   "token_endpoint_auth_method": "none",
